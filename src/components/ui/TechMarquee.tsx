@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   Triangle,
   FileCode,
@@ -16,7 +15,6 @@ import {
   Zap,
   Code,
 } from "lucide-react";
-import { useLang } from "@/context/LanguageContext";
 
 const techStack = [
   { name: "React", Icon: Atom, color: "text-[#61DAFB]" },
@@ -35,7 +33,6 @@ const techStack = [
 ];
 
 export default function TechMarquee() {
-  const { lang } = useLang();
   // Duplicate array 3 times to ensure a seamless infinite scroll loop
   const extendedStack = [...techStack, ...techStack, ...techStack];
 

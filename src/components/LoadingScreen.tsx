@@ -158,7 +158,7 @@ function DustParticles({ shatterProgress, active }: { shatterProgress: number; a
 
 // ─── Scene orchestrator ────────────────────────────────────────────────────────
 function Scene({ onDone }: { onDone: () => void }) {
-  const { gl, camera } = useThree();
+  const { camera } = useThree();
 
   const pieces = useMemo(() =>
     Array.from({ length: PIECE_COUNT }, (_, i) => {
@@ -264,7 +264,7 @@ function Scene({ onDone }: { onDone: () => void }) {
           )}
         />
 
-        {/* @ts-ignore: @react-three/postprocessing type definition bug */}
+        {/* @ts-expect-error: @react-three/postprocessing type definition bug */}
         <Noise
           premultiply
           blendFunction={BlendFunction.SOFT_LIGHT}

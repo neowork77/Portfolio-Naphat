@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
 import { useLang } from "@/context/LanguageContext";
-import dynamic from "next/dynamic";
 import Image from "next/image";
 
 

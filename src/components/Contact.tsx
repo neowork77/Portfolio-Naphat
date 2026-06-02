@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, ArrowUpRight, Phone } from "lucide-react";
+import { Mail, Github, Phone } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
 import { useLang } from "@/context/LanguageContext";
 import Image from "next/image";

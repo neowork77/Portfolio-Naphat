@@ -1,12 +1,9 @@
 "use client";
 
 import { personalInfo } from "@/data/portfolio";
-import { useLang } from "@/context/LanguageContext";
 import TechMarquee from "@/components/ui/TechMarquee";
 
 export default function Footer() {
-  const { t } = useLang();
-
   return (
     <footer className="border-t border-zinc-200 dark:border-zinc-800 pt-8 pb-8 flex flex-col gap-10">
       <div className="container mx-auto flex flex-col items-center justify-between gap-3 px-4 sm:flex-row sm:px-6 lg:px-8  pt-6">

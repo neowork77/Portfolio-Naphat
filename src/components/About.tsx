@@ -1,9 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, Sparkles, User } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import Image from "next/image";
-import { personalInfo } from "@/data/portfolio";
 import { useLang } from "@/context/LanguageContext";
 
 const fadeLeft = {
