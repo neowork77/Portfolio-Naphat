@@ -128,7 +128,7 @@ export default function Hero() {
               <div className="absolute -inset-4 lg:-inset-5 rounded-3xl border-2 border-zinc-200 dark:border-zinc-700/50 -z-10" />
               <div className="w-full h-full rounded-3xl bg-gradient-to-br from-zinc-100 via-white to-zinc-200 dark:from-zinc-800 dark:via-zinc-700 dark:to-zinc-900 flex items-center justify-center overflow-hidden shadow-inner border border-zinc-200 dark:border-none relative">
                 <Image
-                  src="/images/Naphat_Profile04.JPG"
+                  src="/images/Naphat_Profile04.jpg"
                   alt="Profile"
                   fill
                   className="object-cover"

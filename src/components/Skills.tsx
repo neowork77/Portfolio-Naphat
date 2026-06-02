@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { skills } from "@/data/portfolio";
 import { useLang } from "@/context/LanguageContext";
-import Image from "next/image";
 
 type SkillImage = { src: string };
 
@@ -101,7 +100,7 @@ export default function Skills() {
                     >
                       {img && (
                         <div className="flex items-center justify-center w-[14px] h-[14px]">
-                          <Image 
+                          <img 
                             src={img.src} 
                             alt={name} 
                             width={14} 

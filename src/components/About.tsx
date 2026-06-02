@@ -123,7 +123,7 @@ export default function About() {
                   {/* Logo Section */}
                   <div className="shrink-0 relative">
                     <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-zinc-200 shadow-sm flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 overflow-hidden p-3">
-                      <Image src="/images/BU_LOGO.svg" alt="Bangkok University Logo" fill sizes="(max-width: 768px) 96px, 112px" className="object-contain p-3" />
+                      <Image src="/images/BU_Logo.svg" alt="Bangkok University Logo" fill sizes="(max-width: 768px) 96px, 112px" className="object-contain p-3" />
                     </div>
                     {/* Decorative stars */}
                     <Sparkles size={18} className="absolute -top-2 -right-2 text-yellow-500 animate-[pulse_2s_ease-in-out_infinite]" />
