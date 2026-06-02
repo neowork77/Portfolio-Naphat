@@ -158,12 +158,13 @@ function DustParticles({ shatterProgress, active }: { shatterProgress: number; a
 
 // ─── Scene orchestrator ────────────────────────────────────────────────────────
 function Scene({ onDone }: { onDone: () => void }) {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
+  const isMobile = size.width < 768;
 
   const pieces = useMemo(() =>
     Array.from({ length: PIECE_COUNT }, (_, i) => {
       const theta = (i / PIECE_COUNT) * Math.PI * 2;
-      const r = 4.5 + Math.random() * 2.5; // กระจายกว้างขึ้น
+      const r = isMobile ? 3.0 + Math.random() * 2.0 : 4.5 + Math.random() * 2.5; // Scale particle scattering slightly for mobile
       const yOff = (Math.random() - 0.5) * 4;
       return {
         startPos: new THREE.Vector3(Math.cos(theta) * r, yOff, Math.sin(theta) * r),
@@ -171,7 +172,7 @@ function Scene({ onDone }: { onDone: () => void }) {
         shatterDir: new THREE.Vector3((Math.random() - 0.5), (Math.random() - 0.5), (Math.random() - 0.5)).normalize(),
         faceIndex: i,
       };
-    }), []);
+    }), [isMobile]);
 
   const [elapsed, setElapsed] = useState(0);
   const [doneFired, setDoneFired] = useState(false);
@@ -179,7 +180,8 @@ function Scene({ onDone }: { onDone: () => void }) {
   const groupRef = useRef<THREE.Group>(null!);
   const wireframeRef = useRef<THREE.Mesh>(null!);
 
-  useFrame(({ clock }) => {
+  useFrame((state) => {
+    const { clock } = state;
     if (startTime.current === null) startTime.current = clock.getElapsedTime();
     const ms = (clock.getElapsedTime() - startTime.current) * 1000;
     setElapsed(ms);
@@ -188,13 +190,18 @@ function Scene({ onDone }: { onDone: () => void }) {
       onDone();
     }
 
+    // Responsive camera position logic
+    const startCamZ = isMobile ? 8.5 : 6;
+    const endCamZ = isMobile ? 6.5 : 4.5;
+    const endShatterCamZ = isMobile ? 10 : 7;
+
     // Dynamic Camera Movement (ซูมเข้าช้าๆ แล้วดึงกลับตอนระเบิด)
-    const camZ = lerp(6, 4.5, clamp(ms / ASSEMBLE_END, 0, 1));
+    const camZ = lerp(startCamZ, endCamZ, clamp(ms / ASSEMBLE_END, 0, 1));
     if (ms < SHATTER_START) {
       camera.position.z = camZ;
     } else {
       const shatterT = clamp((ms - SHATTER_START) / (SHATTER_END - SHATTER_START), 0, 1);
-      camera.position.z = lerp(4.5, 7, easeInOut(shatterT)); // ดึงกล้องออกตอนระเบิด
+      camera.position.z = lerp(endCamZ, endShatterCamZ, easeInOut(shatterT)); // ดึงกล้องออกตอนระเบิด
     }
   });
 
@@ -252,24 +259,31 @@ function Scene({ onDone }: { onDone: () => void }) {
         <DustParticles shatterProgress={shatterProgress} active={phase === 'shattering' || phase === 'done'} />
       </group>
 
-      {/* Post Processing โหดๆ */}
-      <EffectComposer disableNormalPass>
-        <Bloom luminanceThreshold={0.5} mipmapBlur intensity={1.5} />
+      {/* Post Processing โหดๆ - Optimized for performance on mobile */}
+      {isMobile ? (
+        // @ts-expect-error: @react-three/postprocessing type definition bug
+        <EffectComposer disableNormalPass>
+          <Bloom luminanceThreshold={0.5} mipmapBlur={false} intensity={1.0} />
+        </EffectComposer>
+      ) : (
+        <EffectComposer disableNormalPass>
+          <Bloom luminanceThreshold={0.5} mipmapBlur intensity={1.5} />
 
-        <ChromaticAberration
-          blendFunction={BlendFunction.NORMAL}
-          offset={new THREE.Vector2(
-            phase === 'shattering' ? shatterProgress * 0.02 : 0,
-            phase === 'shattering' ? shatterProgress * 0.02 : 0
-          )}
-        />
+          <ChromaticAberration
+            blendFunction={BlendFunction.NORMAL}
+            offset={new THREE.Vector2(
+              phase === 'shattering' ? shatterProgress * 0.02 : 0,
+              phase === 'shattering' ? shatterProgress * 0.02 : 0
+            )}
+          />
 
-        {/* @ts-expect-error: @react-three/postprocessing type definition bug */}
-        <Noise
-          premultiply
-          blendFunction={BlendFunction.SOFT_LIGHT}
-        />
-      </EffectComposer>
+          {/* @ts-expect-error: @react-three/postprocessing type definition bug */}
+          <Noise
+            premultiply
+            blendFunction={BlendFunction.SOFT_LIGHT}
+          />
+        </EffectComposer>
+      )}
     </>
   );
 }

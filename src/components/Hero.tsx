@@ -131,6 +131,7 @@ export default function Hero() {
                   src="/images/Naphat_Profile04.jpg"
                   alt="Profile"
                   fill
+                  sizes="(max-width: 640px) 256px, (max-width: 1024px) 320px, 384px"
                   className="object-cover"
                   priority
                 />

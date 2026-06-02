@@ -53,8 +53,14 @@ export default function Header() {
   };
 
   const scrollTo = (href: string) => {
-    setMenuOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+    // Delay closing the menu slightly so the mobile browser's smooth scroll starts without layout conflicts
+    setTimeout(() => {
+      setMenuOpen(false);
+    }, 250);
   };
 
   return (
@@ -63,8 +69,8 @@ export default function Header() {
       animate={{ y: hidden && !menuOpen ? "-100%" : 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 border-b border-zinc-200 dark:border-zinc-800 ${
-        scrolled
-          ? "bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md"
+        scrolled || menuOpen
+          ? "bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md"
           : "bg-transparent"
       }`}
     >
