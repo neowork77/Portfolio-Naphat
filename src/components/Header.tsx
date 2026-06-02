@@ -68,11 +68,10 @@ export default function Header() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: hidden && !menuOpen ? "-100%" : 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 border-b border-zinc-200 dark:border-zinc-800 ${
-        scrolled || menuOpen
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 border-b border-zinc-200 dark:border-zinc-800 ${scrolled || menuOpen
           ? "bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md"
           : "bg-transparent"
-      }`}
+        }`}
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
@@ -102,8 +101,8 @@ export default function Header() {
         <div className="flex items-center gap-2">
           {/* Download Resume Desktop */}
           <a
-            href="/images/resume.pdf"
-            download="Resume_Naphat_Thamtheero.pdf"
+            href="/images/Resume_Naphat_Thamtheero.pdf"
+            download
             className="hidden md:flex items-center gap-2 px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-[13px] font-semibold rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
           >
             <Download size={16} />
@@ -125,20 +124,18 @@ export default function Header() {
               transition={{ type: "tween", ease: "easeInOut", duration: 0.3 }}
             />
             <span
-              className={`relative z-10 flex-1 text-center transition-colors duration-200 ${
-                lang === "en"
+              className={`relative z-10 flex-1 text-center transition-colors duration-200 ${lang === "en"
                   ? "text-white dark:text-zinc-900"
                   : "text-zinc-500 dark:text-zinc-400"
-              }`}
+                }`}
             >
               EN
             </span>
             <span
-              className={`relative z-10 flex-1 text-center transition-colors duration-200 ${
-                lang === "th"
+              className={`relative z-10 flex-1 text-center transition-colors duration-200 ${lang === "th"
                   ? "text-white dark:text-zinc-900"
                   : "text-zinc-500 dark:text-zinc-400"
-              }`}
+                }`}
             >
               TH
             </span>
